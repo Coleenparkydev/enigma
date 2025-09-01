@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>XOR Decryption Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+    textarea, input {
+      width: 100%;
+      font-size: 16px;
+      padding: 8px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>XOR Decryption Tool</h1>
+  <p>After entering the encrypted text and the same secret key used for encryption, press the “Decrypt” button, and the original plaintext will be restored.</p>
+  <br>
+  <p>Chinese and Korean language is recommended, but you can use English.</p>
+  <textarea id="encryptedText" placeholder="Write plain text or decryped text"></textarea>
+  <input type="text" id="key" placeholder="Write a custom key for the decryption or encryption (E.X: mySecretKey)">
+  <button onclick="xorDecrypt()">Decrypt or Encrypt</button>
+
+  <div class="result">
+    <h2>Result</h2>
+    <p id="outputText"></p>
+  </div>
+
+  <script>
+    function xorDecrypt() {
+      const encryptedText = document.getElementById("encryptedText").value;
+      const key = document.getElementById("key").value;
+      
+      if (!key) {
+        alert("Write a custom key!!");
+        return;
+      }
+      
+      let output = "";
+      // 암호화와 동일한 XOR 연산을 수행하여 복호화합니다.
+      for (let i = 0; i < encryptedText.length; i++) {
+        const encryptedCharCode = encryptedText.charCodeAt(i);
+        const keyCharCode = key.charCodeAt(i % key.length);
+        const originalCharCode = encryptedCharCode ^ keyCharCode;
+        output += String.fromCharCode(originalCharCode);
+      }
+      
+      document.getElementById("outputText").textContent = output;
+    }
+  </script>
+</body>
+</html>
